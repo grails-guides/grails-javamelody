@@ -1,0 +1,72 @@
+Now that we have our book app in place lets take a look at adding monitoring to is using
+JavaMelody. To begin lets first add the required dependency.
+
+[source,groovy]
+.build.gradle
+----
+include::{sourceDir}/build.gradle[indent=0, tag=monitoringDependency]
+----
+
+And ... that's it, with JavaMelody now added to our application, restart the app and then navigate to
+`http://localhost:8080/monitoring` and you should see the following.
+
+image::melodyHome.png[]
+
+At this point go click around the app and then return to the JavaMelody home page and expand
+details to see that it has caught your activity in the app. By default JavaMelody looks at your
+URIs to resolve HTTP Requests. This means that `/book/1` and `/book/6` will be listed separately.
+
+image::melodyIndependentMonitoring.png[]
+
+This is nice but we don't really get good statistics from viewing requests individually, so
+lets tell JavaMelody to report on requests in aggregate. In our `application.yml` add the
+following
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+include::{sourceDir}/grails-app/conf/application.yml[indent=0, tag=monitoringConfig]
+----
+
+Now once you have restarted the app so it picks up our config changes, do the same as last
+time, navigate to a few different books then return to `http://localhost:8080/monitoring` and
+expand the details to see the aggregate data across multiple requests.
+
+image::melodyCombinedMonitoring.png[]
+
+From the home screen you can easily filter your application statistics over different periods
+of time by selecting `Day`, `Week`, `Month`, `Year`, `All`, or define a `Customized` range in
+which to view stats. Additionally if you want to get a copy of all JavaMelody metrics for
+offline viewing click the PDF button to download a copy.
+
+If you want the ability to enable and disable JavaMelody easily just add the following to
+your `application.yml` to be able to easily toggle monitoring on and off.
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+javamelody:
+    disabled: true
+----
+
+Similarly to HTTP, SQL monitoring will be by request. If you want to view aggregate stats
+add the following to your `application.yml`
+
+[source,yml]
+.grails-app/conf/application.yml
+----
+javamelody:
+    sql-transform-pattern: \d+
+----
+
+Lastly in a production instance our app would have have Spring Security setup and configured.
+To secure JavaMelody when Spring Security is active add the following to your `application.groovy`
+
+[source,yml]
+.grails-app/conf/application.groovy
+----
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [ [pattern: '/monitoring', access: ['ROLE_ADMIN']] ]
+----
+
+Adding the previous line means you will need to be signed in with a user who has `ROLE_ADMIN`
+access in order to access the `/monitoring`.

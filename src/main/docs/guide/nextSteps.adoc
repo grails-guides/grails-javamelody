@@ -1,0 +1,2 @@
+To further your understanding read through the plugin documentation found https://github.com/javamelody/javamelody/wiki/UserGuide[here].
+Additionally feel free browse the plugin home page https://github.com/javamelody/javamelody/wiki[here].
