@@ -1,3 +1,3 @@
-To further your understanding read through the plugin documentation found https://github.com/javamelody/javamelody/wiki/UserGuide[here].
-Additionally feel free browse the plugin home page https://github.com/javamelody/javamelody/wiki[here]. If you
-have more advanced needs look https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced[here].
+To further your understanding, read through the https://github.com/javamelody/javamelody/wiki/UserGuide[Grails Java Melody's plugin documentation],
+Additionally feel free browse the https://github.com/javamelody/javamelody/wiki[plugin home page]. If you
+have more advanced needs look https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced[Java Melody User Advanced Guide].
