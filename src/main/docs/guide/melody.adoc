@@ -7,6 +7,27 @@ JavaMelody. To begin lets first add the required dependency.
 include::{sourceDir}/build.gradle[indent=0, tag=monitoringDependency]
 ----
 
+Sometimes, when using a Grails plugin you want to upgrade a transitive dependency which the plugin
+author has not yet upgraded. If you run the gradle task `dependencies`, you will see the next dependency graph.
+
+[source,bash]
+----
+\--- org.grails.plugins:grails-melody-plugin:1.70.0
+     +--- net.bull.javamelody:javamelody-core:1.70.0
+     |    \--- org.jrobin:jrobin:1.5.9
+     +--- com.lowagie:itext:2.1.7
+     \--- org.jrobin:jrobin:1.5.9
+----
+
+You can upgrade to the latest version of Java Melody 1.71.0 easily:
+
+[source,groovy]
+.build.gradle
+----
+include::{sourceDir}/build.gradle[indent=0, tag=monitoringDependencyTransitive]
+----
+
+
 And ... that's it, with JavaMelody now added to our application, restart the app and then navigate to
 `http://localhost:8080/monitoring` and you should see the following.
 
