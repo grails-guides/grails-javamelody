@@ -1,5 +1,4 @@
-Now that we have our book app in place lets take a look at adding monitoring to is using
-JavaMelody. To begin lets first add the required dependency.
+Add monitoring to the app with JavaMelody. First, add the required dependency.
 
 [source,groovy]
 .build.gradle
@@ -39,9 +38,9 @@ URIs to resolve HTTP Requests. This means that `/book/1` and `/book/6` will be l
 
 image::melodyIndependentMonitoring.png[]
 
-This is nice but we don't really get good statistics from viewing requests individually, so
-lets tell JavaMelody to report on requests in aggregate. In our `application.yml` add the
-following
+If you do not want to get separate statistics per book, but an aggregate of the book detail endpoint,
+you can tell JavaMelody to report on requests in aggregate. In our `application.yml.` add the
+following:
 
 [source,yml]
 .grails-app/conf/application.yml
@@ -70,8 +69,9 @@ javamelody:
     disabled: true
 ----
 
-Similarly to HTTP, SQL monitoring will be by request. If you want to view aggregate stats
-add the following to your `application.yml`
+
+Similarly to HTTP request, you can aggregate stats for SQL monitoring.
+Add the following to your `application.yml`.
 
 [source,yml]
 .grails-app/conf/application.yml
@@ -80,14 +80,21 @@ javamelody:
     sql-transform-pattern: \d+
 ----
 
-Lastly in a production instance our app would have have Spring Security setup and configured.
-To secure JavaMelody when Spring Security is active add the following to your `application.groovy`
+If you are using Spring Security Core and Java Melody plugins in the same app, you will need to configure the security access to the `/monitoring` endpoint.
 
 [source,yml]
-.grails-app/conf/application.groovy
+.grails-app/conf/application.yml
 ----
-grails.plugin.springsecurity.controllerAnnotations.staticRules = [ [pattern: '/monitoring', access: ['ROLE_ADMIN']] ]
+grails:
+  plugin:
+    springsecurity:
+      controllerAnnotations:
+        staticRules:
+          -
+            pattern: /monitoring
+            access:
+              - ROLE_ADMIN
 ----
 
-Adding the previous line means you will need to be signed in with a user who has `ROLE_ADMIN`
-access in order to access the `/monitoring`.
+Adding the previous configuration to `application.yml` means you will need to be authenticated with a user who has `ROLE_ADMIN`
+access to access the `/monitoring`.

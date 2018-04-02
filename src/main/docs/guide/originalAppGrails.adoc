@@ -8,8 +8,8 @@ To quickly cover how to create the app, we first need to add a `Book` domain.
 include::{sourceDir}/grails-app/domain/demo/Book.groovy[]
 ----
 
-We will be using a custom `findAll` to return our list of books and for that we will need to use an additional `BookImage`
-object. First create your `BookImage` in the `src/main/groovy` directory
+The home page displays a list of books. We only need a subset of data from each book. Namely, the unique
+identifier and the book cover image. Create a Groovy POGO to encapsulate that information in the `src/main/groovy` directory
 
 [source,groovy]
 .src/main/groovy/demo/BookImage.groovy
@@ -25,7 +25,7 @@ Create default CRUD actions for `Book` leveraging http://gorm.grails.org/latest/
 include::{sourceDir}/grails-app/services/demo/BookDataService.groovy[]
 ----
 
-Next connect our new controller up to the services that we just created. Our index will leverage our custom `findAll` to
+Next, create a controller which consumes the service that we just created. Our index will leverage our custom `findAll` to
 return a complete list of books while our show will make use of the data services `findById`.
 
 [source,groovy]
@@ -42,7 +42,7 @@ Then we need to actually create the book data with our `Bootstrap.groovy`
 include::{sourceDir}/grails-app/init/demo/BootStrap.groovy[]
 ----
 
-Lastly we update our url mapping so that our default url will display our list of books
+Lastly, we update our URL mapping so that the default endpoint `/` displays a list of books.
 
 [source,groovy]
 .grails-app/controllers/demo/UrlMappings.groovy
